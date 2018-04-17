@@ -640,7 +640,8 @@ function splat (x, y, dx, dy, color) {
 
 function multipleSplats (amount) {
     for (let i = 0; i < amount; i++) {
-        const color = [Math.random() * 10, Math.random() * 10, Math.random() * 10];
+        // const color = [Math.random() * 10, Math.random() * 10, Math.random() * 10];
+        const color = [0.42, 0.11, 0];
         const x = canvas.width * Math.random();
         const y = canvas.height * Math.random();
         const dx = 1000 * (Math.random() - 0.5);
@@ -696,7 +697,8 @@ canvas.addEventListener('touchstart', (e) => {
         pointers[i].down = true;
         pointers[i].x = touches[i].pageX;
         pointers[i].y = touches[i].pageY;
-        pointers[i].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
+        pointers[0].color = [0.42, 0.11, 0];
+        // pointers[i].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
     }
 });
 

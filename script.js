@@ -697,7 +697,7 @@ canvas.addEventListener('touchstart', (e) => {
         pointers[i].down = true;
         pointers[i].x = touches[i].pageX;
         pointers[i].y = touches[i].pageY;
-        pointers[0].color = [0.42, 0.11, 0];
+        pointers[i].color = [0.42, 0.11, 0];
         // pointers[i].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
     }
 });

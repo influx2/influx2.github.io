@@ -6,13 +6,23 @@ canvas.height = canvas.clientHeight;
 
 let config = {
     TEXTURE_DOWNSAMPLE: 1,
-    DENSITY_DISSIPATION: 0.98,
-    VELOCITY_DISSIPATION: 0.99,
-    PRESSURE_DISSIPATION: 0.8,
-    PRESSURE_ITERATIONS: 25,
-    CURL: 30,
-    SPLAT_RADIUS: 0.005
+    DENSITY_DISSIPATION: 1,
+    VELOCITY_DISSIPATION: 0.93,
+    PRESSURE_DISSIPATION: 0.94,
+    PRESSURE_ITERATIONS: 57,
+    CURL: 6,
+    SPLAT_RADIUS: 0.0007
 }
+
+// let config = {
+//     TEXTURE_DOWNSAMPLE: 1,
+//     DENSITY_DISSIPATION: 0.98,
+//     VELOCITY_DISSIPATION: 0.99,
+//     PRESSURE_DISSIPATION: 0.8,
+//     PRESSURE_ITERATIONS: 25,
+//     CURL: 30,
+//     SPLAT_RADIUS: 0.005
+// }
 
 let pointers = [];
 let splatStack = [];
@@ -125,12 +135,24 @@ function startGUI () {
     gui.add(config, 'CURL', 0, 50).name('vorticity').step(1);
     gui.add(config, 'SPLAT_RADIUS', 0.0001, 0.01).name('splat radius');
 
+    var cparams = {color: "#1861b3" };
+
+    var update = function () {
+        var colorObj = new THREE.Color( cparams.color );
+        var hex = colorObj.getHexString();
+        var css = colorObj.getStyle();
+        var display = "#"+ hex + " or " + css;
+        $("#colors").append(display+"<br>");
+    };
+
+  gui.addColor(cparams,'color').onChange(update);
+
     let randomSplats = gui.add({ fun: () => {
             splatStack.push(parseInt(Math.random() * 20) + 5);
         }
     }, 'fun').name('Random splats');
 
-    let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.2');
+    let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.3');
     github.__li.className = 'cr function bigFont';
     github.__li.style.borderLeft = '3px solid #8C8C8C';
     let githubIcon = document.createElement('span');
@@ -691,7 +713,7 @@ canvas.addEventListener('touchstart', (e) => {
         pointers[i].down = true;
         pointers[i].x = touches[i].pageX;
         pointers[i].y = touches[i].pageY;
-        pointers[i].color = [0.42, 0.11, 0];
+        pointers[i].color = [0, 0, 0.45];
         // pointers[i].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
     }
 });

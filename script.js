@@ -29,8 +29,10 @@ let splatStack = [];
 
 let cparam1 = {color: [0.30, 0.80, 0.10] };
 let cparam2 = {color: [0.26, 0.19, 0.57] };
-let cparam3 = {color: [0.30, 0.80, 0.10] };
-let cparam4 = {color: [0.30, 0.80, 0.10] };
+let cparam3 = {color: [0.92, 0.34, 0.78] };
+let cparam4 = {color: [0.20, 0.10, 0.05] };
+
+let cmatrix = [cparam1, cparam2, cparam3, cparam4];
 
 const  { gl, ext } = getWebGLContext(canvas);
 startGUI();
@@ -152,7 +154,7 @@ function startGUI () {
   }
 }, 'fun').name('Random splats');
 
-let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.4');
+let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.5');
 github.__li.className = 'cr function bigFont';
 github.__li.style.borderLeft = '3px solid #8C8C8C';
 let githubIcon = document.createElement('span');
@@ -659,7 +661,7 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
                         for (let i = 0; i < amount; i++) {
                           // const color = [Math.random() * 10, Math.random() * 10, Math.random() * 10];
                           // const color = [0.42, 0.11, 0];
-                          const color = cparam1.color;
+                          const color = cmatrix[0].color;
                           const x = canvas.width * Math.random();
                           const y = canvas.height * Math.random();
                           const dx = 1000 * (Math.random() - 0.5);
@@ -699,7 +701,7 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
 
                       canvas.addEventListener('mousedown', () => {
                         pointers[0].down = true;
-                        pointers[0].color = cparam1.color;
+                        pointers[0].color = cmatrix[0].color;
                         // pointers[0].color = [0.42, 0.11, 0];
                         // pointers[0].color = [Math.random(), Math.random(), Math.random()];
                         // pointers[0].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
@@ -716,7 +718,7 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
                           pointers[i].down = true;
                           pointers[i].x = touches[i].pageX;
                           pointers[i].y = touches[i].pageY;
-                          pointers[i].color = cparam1.color;
+                          pointers[i].color = cmatrix[i].color;
                           // pointers[i].color = [0, 0, 0.45];
                           // pointers[i].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
                         }

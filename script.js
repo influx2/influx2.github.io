@@ -6,23 +6,13 @@ canvas.height = canvas.clientHeight;
 
 let config = {
   TEXTURE_DOWNSAMPLE: 1,
-  DENSITY_DISSIPATION: 0.98,
+  DENSITY_DISSIPATION: 1,
   VELOCITY_DISSIPATION: 0.93,
   PRESSURE_DISSIPATION: 0.94,
   PRESSURE_ITERATIONS: 57,
   CURL: 6,
   SPLAT_RADIUS: 0.0007
 }
-
-// let config = {
-//     TEXTURE_DOWNSAMPLE: 1,
-//     DENSITY_DISSIPATION: 0.98,
-//     VELOCITY_DISSIPATION: 0.99,
-//     PRESSURE_DISSIPATION: 0.8,
-//     PRESSURE_ITERATIONS: 25,
-//     CURL: 30,
-//     SPLAT_RADIUS: 0.005
-// }
 
 let pointers = [];
 let splatStack = [];
@@ -154,7 +144,7 @@ function startGUI () {
   }
 }, 'fun').name('Random splats');
 
-let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.5');
+let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.6');
 github.__li.className = 'cr function bigFont';
 github.__li.style.borderLeft = '3px solid #8C8C8C';
 let githubIcon = document.createElement('span');
@@ -659,8 +649,6 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
 
                       function multipleSplats (amount) {
                         for (let i = 0; i < amount; i++) {
-                          // const color = [Math.random() * 10, Math.random() * 10, Math.random() * 10];
-                          // const color = [0.42, 0.11, 0];
                           const color = cmatrix[0].color;
                           const x = canvas.width * Math.random();
                           const y = canvas.height * Math.random();
@@ -702,9 +690,6 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
                       canvas.addEventListener('mousedown', () => {
                         pointers[0].down = true;
                         pointers[0].color = cmatrix[0].color;
-                        // pointers[0].color = [0.42, 0.11, 0];
-                        // pointers[0].color = [Math.random(), Math.random(), Math.random()];
-                        // pointers[0].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
                       });
 
                       canvas.addEventListener('touchstart', (e) => {
@@ -719,8 +704,6 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
                           pointers[i].x = touches[i].pageX;
                           pointers[i].y = touches[i].pageY;
                           pointers[i].color = cmatrix[i].color;
-                          // pointers[i].color = [0, 0, 0.45];
-                          // pointers[i].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
                         }
                       });
 

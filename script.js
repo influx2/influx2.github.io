@@ -17,12 +17,7 @@ let config = {
 let pointers = [];
 let splatStack = [];
 
-let cparam1 = {color: [0.30, 0.80, 0.10] };
-let cparam2 = {color: [0.26, 0.19, 0.57] };
-let cparam3 = {color: [0.92, 0.34, 0.78] };
-let cparam4 = {color: [0.20, 0.10, 0.05] };
-
-let cmatrix = [cparam1, cparam2, cparam3, cparam4];
+let cparam = {color: [0.40, 0.21, 0.01, 0.3] };
 
 const  { gl, ext } = getWebGLContext(canvas);
 startGUI();
@@ -45,7 +40,7 @@ function getWebGLContext (canvas) {
     supportLinearFiltering = gl.getExtension('OES_texture_half_float_linear');
   }
 
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clearColor(0.0, 0.0, 0.0, 0.3);
 
   const halfFloatTexType = isWebGL2 ? gl.HALF_FLOAT : halfFloat.HALF_FLOAT_OES;
   let formatRGBA;
@@ -124,35 +119,17 @@ function supportRenderTextureFormat (gl, internalFormat, format, type) {
 
 function startGUI () {
   var gui = new dat.GUI({ width: 300 });
-  gui.add(config, 'TEXTURE_DOWNSAMPLE', { Full: 0, Half: 1, Quarter: 2 }).name('resolution').onFinishChange(initFramebuffers);
-  gui.add(config, 'DENSITY_DISSIPATION', 0.9, 1.0).name('density diffusion');
-  gui.add(config, 'VELOCITY_DISSIPATION', 0.9, 1.0).name('velocity diffusion');
-  gui.add(config, 'PRESSURE_DISSIPATION', 0.0, 1.0).name('pressure diffusion');
-  gui.add(config, 'PRESSURE_ITERATIONS', 1, 60).name('iterations');
-  gui.add(config, 'CURL', 0, 50).name('vorticity').step(1);
-  gui.add(config, 'SPLAT_RADIUS', 0.0001, 0.01).name('splat radius');
 
+  let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.7');
+  github.__li.className = 'cr function bigFont';
+  github.__li.style.borderLeft = '3px solid #8C8C8C';
+  let githubIcon = document.createElement('span');
+  github.domElement.parentElement.appendChild(githubIcon);
+  githubIcon.className = 'icon github';
 
-  gui.addColor(cparam1,'color');
-  gui.addColor(cparam2,'color');
-  gui.addColor(cparam3,'color');
-  gui.addColor(cparam4,'color');
+  gui.addColor(cparam,'color');
 
-
-  let randomSplats = gui.add({ fun: () => {
-    splatStack.push(parseInt(Math.random() * 20) + 5);
-  }
-}, 'fun').name('Random splats');
-
-let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.6');
-github.__li.className = 'cr function bigFont';
-github.__li.style.borderLeft = '3px solid #8C8C8C';
-let githubIcon = document.createElement('span');
-github.domElement.parentElement.appendChild(githubIcon);
-githubIcon.className = 'icon github';
-
-
-gui.close();
+  gui.close();
 
 }
 
@@ -164,7 +141,7 @@ function pointerPrototype () {
   this.dy = 0;
   this.down = false;
   this.moved = false;
-  this.color = cparam2.color;
+  this.color = cparam.color;
 }
 
 pointers.push(new pointerPrototype());
@@ -649,7 +626,7 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
 
                       function multipleSplats (amount) {
                         for (let i = 0; i < amount; i++) {
-                          const color = cmatrix[0].color;
+                          const color = cparam.color;
                           const x = canvas.width * Math.random();
                           const y = canvas.height * Math.random();
                           const dx = 1000 * (Math.random() - 0.5);
@@ -689,7 +666,7 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
 
                       canvas.addEventListener('mousedown', () => {
                         pointers[0].down = true;
-                        pointers[0].color = cmatrix[0].color;
+                        pointers[0].color = cparam.color;
                       });
 
                       canvas.addEventListener('touchstart', (e) => {
@@ -703,7 +680,7 @@ const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
                           pointers[i].down = true;
                           pointers[i].x = touches[i].pageX;
                           pointers[i].y = touches[i].pageY;
-                          pointers[i].color = cmatrix[i].color;
+                          pointers[i].color = cparam.color;
                         }
                       });
 

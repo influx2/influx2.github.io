@@ -17,7 +17,7 @@ let config = {
 let pointers = [];
 let splatStack = [];
 
-let cparam = {color: [0.40, 0.21, 0.01, 1.0] };
+let cparam = {color: [Math.random()*255, Math.random()*255, Math.random()*255, 1.0] };
 
 const  { gl, ext } = getWebGLContext(canvas);
 startGUI();

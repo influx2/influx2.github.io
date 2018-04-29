@@ -133,7 +133,7 @@ function startGUI () {
 
     gui.addColor(cparam,'color');
 
-    gui.close();
+    //gui.close();
 }
 
 function pointerPrototype () {

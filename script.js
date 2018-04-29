@@ -9,8 +9,8 @@ let config = {
   DENSITY_DISSIPATION: 1,
   VELOCITY_DISSIPATION: 0.93,
   PRESSURE_DISSIPATION: 0.94,
-  PRESSURE_ITERATIONS: 57,
-  CURL: 6,
+  PRESSURE_ITERATIONS: 0,
+  CURL: 0,
   SPLAT_RADIUS: 0.0007
 }
 
@@ -125,8 +125,8 @@ function startGUI () {
     gui.add(config, 'DENSITY_DISSIPATION', 0.9, 1.0).name('density diffusion');
     gui.add(config, 'VELOCITY_DISSIPATION', 0.9, 1.0).name('velocity diffusion');
     gui.add(config, 'PRESSURE_DISSIPATION', 0.0, 1.0).name('pressure diffusion');
-    gui.add(config, 'PRESSURE_ITERATIONS', 1, 60).name('iterations');
-    gui.add(config, 'CURL', 0, 50).name('vorticity').step(1);
+    gui.add(config, 'PRESSURE_ITERATIONS', 0.0, 60).name('iterations');
+    gui.add(config, 'CURL', 0, 50).name('vorticity').step(1); // takes off the ugly jagged edges
     gui.add(config, 'SPLAT_RADIUS', 0.0001, 0.01).name('splat radius');
 
     let github = gui.add({ fun : () => { window.open('http://influx2.github.io'); } }, 'fun').name('Influx 2.0.9');
